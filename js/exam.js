@@ -82,8 +82,91 @@ function ExamContext() {
         pa_params = pa_params.replace(/'/g, '"');
 
 
+    $(".pa-question").each( function() {
+        var pa_params = $(this).data("pa-params");
+        pa_params = pa_params.replace(/'/g, '"');
+        var showPts = true; //$(this).data("pa-showPts") == "true"; TODO: don't hardcode true, figure out who comparison failing
+        var pts = $(this).data("pa-pts");
+        var ptsString = null;
+
+        if(showPts)
+        {
+            ptsString = "(" + pts + (pts == "1" ? "pt" : "pts") + ")";
+        }
+
         var quizJson = JSON.parse(pa_params);
-        var quiz = new Quiz(seed, quizJson);
+        var quiz = new Quiz(startExamNum, quizJson);
+
+        $(this).html((showPts ? ptsString : "") + quiz.formatQuestionsHTML() + "<br>" + quiz.formatAnswersHTML());
+    });
+
+	$(".showAnswerKey").click(function(){
+		ec.showAnswerKey();
+	    });
+	
+	
+	$(".makeCopies").click(function(){
+		$(this).css("background-color","red");
+		$("#containerCopies").empty();
+		$("#container").each(function (j) { 
+			console.log("#container j=" + j); 
+			console.log("startExamNum=" + startExamNum + " examCount=" + examCount); 
+			
+			for (var i=startExamNum; i<startExamNum+examCount; i++) { 
+			    $(this).clone().removeAttr("id").addClass("containerCopy").data("sequence",i).appendTo("#containerCopies");
+			}
+		    });
+		$(".containerCopy").each( function(k) {
+		     var sequence = $(this).data("sequence");
+		     console.log(".containerCopy k=" + k + " sequence=" + sequence);
+
+
+		     $(this).find("ol.theQuestions li").each( function(i) {
+			     console.log("setting questionNum to " + (i+1));
+			     $(this).data("questionNum",i+1);
+			     $(this).find(".continued").data("questionNum",i+1);
+			 });
+
+		     $(this).find(".awesome").each( function (n) {
+			     var theJson = $(this).data("awesome-json");
+			     console.log(".awesome n= " + n + 
+					 " sequence=" + sequence + " json=" + theJson);
+			     var thisQuiz = new Quiz(sequence,json);
+			     $(this).append(thisQuiz.formatQuestionsHTML +
+                               "<div class='answerKey'>" +
+					    thisQuiz.formatAnswersHTML +
+					    "</div>");
+			 });
+
+		 $(this).find(".pageBreakBefore").each( function(n) {
+		     var theHTML = generatePageHeader(sequence, n+1);
+		     console.log("pageBreakBefore n= " + n + " sequence=" + sequence);
+		     console.log("pageBreakBefore, theHTML=" + theHTML);
+		     $(this).before(theHTML);
+                             $(this).before($('<hr/>', {class: 'pageHeader'}));
+
+		      }); 
+
+		     $(this).find(".continued").each( function(n) {
+			     console.log("continued n= " + n + " sequence=" + sequence);
+			     var qNum = $(this).data("questionNum");
+			     $(this).before($('<p/>', {class: 'continuedLabel',
+					     text: "Extra space for answer to question " + qNum
+					     }));
+
+
+		      }); 
+
+		     var text= $(this).contents().text();
+		     var totalPoints = pointCountText(text);
+		     console.log("Found: " + text + " totalPoints=" + totalPoints);
+
+		     $(this).find(".pointCount").text("total points=" + totalPoints);
+
+		 });
+
+	     
+	 });
 
         $(this).html((showPts ? ptsString : "") + quiz.formatQuestionsHTML() + "<br>" + quiz.formatAnswersHTML());
     });

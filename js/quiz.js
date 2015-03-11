@@ -48,8 +48,8 @@ var Quiz = function Quiz(seed,quizDescriptor)
 	// else 
         var text = "<ol>";
         for(var i=0; i<this.questions.length; i++)
-            text += "<li>" + this.questions[i].formatAnswer("HTML") + "</li>";
-        return text + "</ol>";
+            text += "<div class='pa-question-answer'><strong>Answer " + this.questions[i].formatAnswer("HTML") + "</strong></div>";
+        return text;
     }
 
 

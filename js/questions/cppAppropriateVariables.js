@@ -115,23 +115,17 @@ function cppGenerateBoolAnswer(randomStream)
 
 function CppApproVar(randomStream)
 {
-    var testVarTypes = [ "int", "double", "char", "bool" ];
+    var testVarTypes = ["int", "double", "bool", "char"]; // [ "int", "double", "char", "bool" ]; "atrocious"
     var typeAnswer;
 
-    /*
-    if(randomStream.nextIntRange(5) === 0)
-        typeAnswer = 2 + randomStream.nextIntRange(2);
-    else
-        typeAnswer = randomStream.nextIntRange(2);
-    */
-
-    typeAnswer = randomStream.nextIntRange(4);
+    //typeAnswer = randomStream.nextIntRange(4);
+    typeAnswer = randomStream.nextIntRange(3);
 
     var typeQuestion;
     // 2 types of question
     if(randomStream.nextIntRange(2) === 0) // given statement, choose type
     {
-        typeQuestion = "<p>Which type will store the following statement or literal?</p><pre>";
+        typeQuestion = "<p>Which type will store the following expression or literal?</p><pre>";
         switch(typeAnswer)
         {
             case 0:
@@ -140,9 +134,11 @@ function CppApproVar(randomStream)
             case 1:
                 typeQuestion += cppGenerateDoubleAnswer(randomStream);
                 break;
+/*
             case 2:
                 typeQuestion += cppGenerateCharAnswer(randomStream);
                 break;
+*/
             default:
                 typeQuestion += cppGenerateBoolAnswer(randomStream);
         }
@@ -155,7 +151,6 @@ function CppApproVar(randomStream)
             { value: testVarTypes[3], flag: false }
         ];
         this.answerChoices[typeAnswer].flag = true;
-        //randomStream.shuffle(this.answerChoices);
     }
     else // given type, choose statement
     {
@@ -168,11 +163,9 @@ function CppApproVar(randomStream)
             { value: cppGenerateCharAnswer(randomStream), flag: (typeAnswer===2) },
             { value: cppGenerateBoolAnswer(randomStream), flag: (typeAnswer===3) }
         ];
-        //randomStream.shuffle(this.answerChoices);
     }
 
     this.correctIndex = typeAnswer;
-    //this.answerChoices[this.correctIndex][3] = true;
 
     this.formatQuestion = function(format) {
         switch (format) {

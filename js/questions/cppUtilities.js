@@ -31,3 +31,33 @@ function cppGenerateRandomValue(randomStream, num)  // 0: integer, 1: double, 2:
             return ["true", "false"][randomStream.nextIntRange(2)];
     }
 }
+
+function cppGetUniqueRandomId(randomStream, num, uniques)
+{
+    var uName;
+
+    do {
+        uName = cppGetRandomId(randomStream, num);
+    } while(uniques.indexOf(uName) !== -1);
+
+    uniques.push(uName);
+    return uName;
+}
+
+function cppAddUniqueToList(unique, uList)
+{
+    if(uList.indexOf(unique) === -1)
+    {
+        uList.push(unique);
+    }
+}
+
+function cppEnsureElementNotInList(element, aList)
+{
+    var eIdx = aList.indexOf(element);
+
+    if(eIdx !== -1)
+    {
+        aList.splice(eIdx, 1);
+    }
+}

@@ -1,9 +1,4 @@
-// TODO: from file:///home/jasen/code/AwesomeNextSteps/html/quiz.html?seed=&questionType=cppFunctionParameters&showQuestions=yes&showKey=yes&showJSON=no&jsonString=%7B%22version%22%3A0.1%2C%22title%22%3A%22%22%2C%22quiz%22%3A%5B%7B%22question%22%3A%22cppFunctionParameters%22%2C%22repeat%22%3A%225%22%7D%5D%7D
-// question 2: passing pointer problem has correct answer in answer list twice
-// question 4: pass-by-reference correct answer is incorrect, unchanged from initial value
-// question 5: pass array problem does not specify which array element gets printed, correct answer appears twice
-
-function cppFunctionParametersA(randomStream, params)
+function cppFunctionParametersA(randomStream)
 {
     var parameterPassTypes =
         [
@@ -87,234 +82,120 @@ function cppFunctionParametersB(randomStream, params)
     var mainFun = "";
     var calledFun = "";
 
-    // make all the decisions about how the program will be arranged
-    var passTypeIndex = randomStream.nextIntRange(4);
-    var doesCalledFunHave2ndParameter; // if passTypeIndex == 3, this must be true
-    if(passTypeIndex === 3)
-        doesCalledFunHave2ndParameter = true;
-    else
-        doesCalledFunHave2ndParameter = cppGenerateRandomValue(randomStream, 2);
-    var doesCalledFunReturn = false; //cppGenerateRandomValue(randomStream, 2);
-    // TODO: main always seems to store the return
-    var doesMainStoreReturn; // if doesCalledFunReturn == false, this must be false too
-    if(!doesCalledFunReturn)
-        doesMainStoreReturn = false;
-    else
-        doesMainStoreReturn = cppGenerateRandomValue(randomStream, 2);
-    var calledFunMultiplier = randomStream.nextIntRange(10) + 1;
-    var calledFunAdder = randomStream.nextIntRange(10) + 1;
-    var calledFunEvaluatedValue;
-    var calledFunEvaluatedArrayIndex;
-
-    // set some initial values
-    var mainVarName1; var mainVarName2;
-    var mainVarVal1; var mainVarVal2;
-    var calledFunArgName1; var calledFunArgName2;
-    var mainReturnStorageName;
-    mainVarName1 = cppGetRandomId(randomStream, 0);
-    mainVarName2 = cppGetRandomId(randomStream, 1);
-    if(passTypeIndex === 3)
-    {
-        mainVarVal1 = [ (randomStream.nextIntRange(10) + 2),
-            (randomStream.nextIntRange(10) + 2), (randomStream.nextIntRange(10) + 2) ];
-        mainVarVal2 = 3;
-    }
-    else
-    {
-        mainVarVal1 = randomStream.nextIntRange(10) + 2;
-        mainVarVal2 = randomStream.nextIntRange(10) + 2;
-    }
-    calledFunArgName1 = cppGetRandomId(randomStream, 2);
-    calledFunArgName2 = cppGetRandomId(randomStream, 3);
-
-    mainReturnStorageName = calledFunArgName2;
-    do
-    {
-        mainReturnStorageName = cppGetRandomId(randomStream, 3);
-    } while(mainReturnStorageName === calledFunArgName2)
-
-    if(passTypeIndex === 3)
-    {
-        calledFunEvaluatedValue = mainVarVal1;
-        calledFunEvaluatedValue.map(function(element) {
-           return element * calledFunMultiplier + calledFunAdder;
-        });
-        calledFunEvaluatedArrayIndex = randomStream.nextIntRange(3);
-    }
-    else
-    {
-        calledFunEvaluatedValue = mainVarVal1 * calledFunMultiplier + calledFunAdder;
-    }
-
-
-
-
-    // write main() function
-    mainFun += "int main()\n{\n";
-    if(passTypeIndex === 3)
-    {
-        mainFun += "  int " + mainVarName1 + "[] = [ " + mainVarVal1.join(", ") + " ];\n";
-    }
-    else
-    {
-        mainFun += "  int " + mainVarName1 + " = " + mainVarVal1 + ";\n";
-    }
-
-    if(doesCalledFunHave2ndParameter)
-        mainFun += "  int " + mainVarName2 + " = " + mainVarVal2 + ";\n";
-
-    mainFun += "  int " + mainReturnStorageName + ";\n";
-
-    mainFun += "\n";
-    if(doesMainStoreReturn)
-        mainFun += "  " + mainReturnStorageName + " = ";
-    else
-        mainFun += "  ";
-
-    mainFun += "fun(" + mainVarName1 +
-        (doesCalledFunHave2ndParameter ? ", " + mainVarName2 : "") +
-        ");\n\n";
-    mainFun += "  std:: cout << " + (doesMainStoreReturn ? mainReturnStorageName : mainVarName1) +
-        " << std::endl;\n\nreturn 0;\n}\n";
-
-
-
-
-    // write called function
-    calledFun += "#include &lt;iostream>\n\n";
-    calledFun += (doesCalledFunReturn ? "int " : "void ") + "fun(" +
-        (passTypeIndex === 1 ? "&" : (passTypeIndex === 2 ? "*" : "")) +
-        calledFunArgName1 + (passTypeIndex === 3 ? "[]" : "") +
-        (doesCalledFunHave2ndParameter ? ", " + calledFunArgName2 : "") + ")\n{\n";
-
-    var usingArg1;
-    if(passTypeIndex === 2)
-        usingArg1 = "(*" + calledFunArgName1 + ")";
-    else
-        usingArg1 = calledFunArgName1;
-
-    if(passTypeIndex === 3)
-    {
-        calledFun += "  for(int i = 0; i < " + calledFunArgName2 +" ++i)\n" +
-            "    " + calledFunArgName1 + "[i] = " + calledFunArgName1 + "[i] * " + calledFunMultiplier +
-            " + " + calledFunAdder + ";\n";
-    }
-    else
-    {
-        calledFun += "  " + usingArg1 + " = " + usingArg1 + " * " + calledFunMultiplier +
-        " + " + calledFunAdder + ";\n";
-    }
-
-    // TODO: if passTypeIndex is 1 or 2 and called returns, have chance where it returns 1 or 0
-    if(doesCalledFunReturn)
-    {
-        calledFun += "\n  return ";
-        if(passTypeIndex === 3)
-            calledFun += calledFunArgName1 + "[" + calledFunEvaluatedArrayIndex + "];\n";
-        else
-            calledFun += calledFunArgName1 + ";\n";
-    }
-
-    calledFun += "}\n\n";
-
-
-
-
-    // TODO: if called doesn't return or main doesn't store on pass by array, need an index for correct answer
+    // make some decisions about how the program will be arranged
     var correctAnswer;
-    var redHerrings = [];
+    var redHerrings;
+    var uniqueNames = [ ];    // maintain a list to avoid name collisions
+    var calledFunName = cppGetUniqueRandomId(randomStream, randomStream.nextIntRange(3), uniqueNames);
+    var mainConstVarName = cppGetUniqueRandomId(randomStream, 3, uniqueNames);
+    var mainRetVarName = cppGetUniqueRandomId(randomStream, 3, uniqueNames);
+    var calledArgName = cppGetUniqueRandomId(randomStream, 3, uniqueNames);
+    var calledVarName = cppGetUniqueRandomId(randomStream, 3, uniqueNames);
+    var mainConstVarVal = 2 + randomStream.nextIntRange(17);    // 2-19
+    var mainRetVarVal;
+    var calledArgVal;
+    var calledVarVal;
+    var calledMultiplicand = 2 + randomStream.nextIntRange(7); // 2-9
+    var calledSummand = 2 + randomStream.nextIntRange(17); // 2-19
+    var calledReturnsArgNotVar = false;
+    var calledReturnsZeroNotVar = false;
+    switch(randomStream.pick([0, 1, 2]))
+    {
+        case 0:
+            calledReturnsArgNotVar = true;
+            break;
+        case 1:
+            calledReturnsZeroNotVar = true;
+    }
+    var passArgByType = randomStream.pick([0, 1, 2]);
 
-    // determine correct answer
-    if(doesMainStoreReturn)
+    //////////////////////////////////////////////////////
+    // figure out correct answer and legit red herrings //
+    //////////////////////////////////////////////////////
+    calledArgVal = mainConstVarVal;
+    calledVarVal = calledArgVal * calledMultiplicand + calledSummand;
+    if(calledReturnsArgNotVar)      /* */
     {
-        if(passTypeIndex === 3)
-        {
-            correctAnswer = calledFunEvaluatedValue[calledFunEvaluatedArrayIndex];
-        }
-        else
-        {
-            correctAnswer = calledFunEvaluatedValue;
-        }
+        correctAnswer = calledArgVal;
     }
-    else if(passTypeIndex === 0)
+    else if(calledReturnsZeroNotVar)
     {
-        correctAnswer = mainVarVal1;
-    }
-    else if(passTypeIndex === 1 || passTypeIndex === 2)
-    {
-        correctAnswer = calledFunEvaluatedValue;
-    }
-    else if(passTypeIndex === 3)
-    {
-        correctAnswer = calledFunEvaluatedValue[calledFunEvaluatedArrayIndex];
+        correctAnswer = 0;
     }
     else
     {
-        alert("unable to determine correctAnswer");
-        correctAnswer = "error, ya'll";
+        correctAnswer = calledVarVal;
     }
-    correctAnswer = correctAnswer.toString();
 
-    // generate red herrings
-    if(correctAnswer != 0)
-        redHerrings.push("0");
-    if(correctAnswer !== mainVarVal1)
+    redHerrings = [ 1, 'an error']; //, 'a memory address' ]; // standard red herrings
+    cppAddUniqueToList(mainConstVarVal, redHerrings);
+    cppAddUniqueToList(calledArgVal, redHerrings);
+    cppAddUniqueToList((mainConstVarVal + calledSummand) * calledMultiplicand, redHerrings);
+    cppAddUniqueToList(mainConstVarVal * (calledMultiplicand + calledSummand), redHerrings);
+    cppEnsureElementNotInList(correctAnswer, redHerrings);
+    while(redHerrings.length < 3)   // make sure enough were added to create a complete answer list (need 3 RHs)
     {
-        if(passTypeIndex === 3)
-        {
-            redHerrings.push(mainVarVal1[calledFunEvaluatedArrayIndex].toString());
-        }
-        else
-        {
-            redHerrings.push(mainVarVal1.toString());
-        }
-    }
-    redHerrings.push("an error");
-    redHerrings.push("a memory address");
-    if(passTypeIndex === 3)
-    {
-        for(var x in calledFunEvaluatedValue)
-        {
-            if(x != correctAnswer)
-                redHerrings.push(x.toString());
-        }
-
-        for(var x in mainVarVal1)
-        {
-            if(x != correctAnswer)
-                redHerrings.push(x.toString());
-        }
-    }
-    else
-    {
-        if(correctAnswer != calledFunEvaluatedValue)
-        {
-            redHerrings.push(calledFunEvaluatedValue.toString());
-        }
-
-    }
-    // darn, i have to fill it with weak red herrings
-    while(redHerrings.length < 3)
-    {
-        var canInsert = true;
-        var newHerring = (randomStream.nextIntRange(97) + 2).toString();
-
-        if(newHerring == correctAnswer)
-            continue;
-
-        for(var y in redHerrings)   // random herring isn't already a herring?
-        {
-            if(y == newHerring)
-                canInsert = false;
-        }
-
-        if(canInsert)
-            redHerrings.push(newHerring);
+        cppAddUniqueToList(2 + randomStream.nextIntRange(97));  // 2-99
     }
 
     randomStream.shuffle(redHerrings);
-    redHerrings = redHerrings.slice(0, 3);
 
+
+
+    // create called function
+    calledFun += "#include &lt;iostream>\n\n";
+    switch(passArgByType)
+    {
+        case 1:
+            calledFun += "int " + calledFunName + "(int &" + calledArgName + ")\n{\n";
+            break;
+        case 2:
+            calledFun += "int " + calledFunName + "(int *" + calledArgName + ")\n{\n";
+            break;
+        default:
+            calledFun += "int " + calledFunName + "(int " + calledArgName + ")\n{\n";
+    }
+
+    calledFun += "  int " + calledVarName + ";\n\n";
+    switch(passArgByType)
+    {
+        case 2:
+            calledFun += "  " + calledVarName + " = (*" + calledArgName + ") * " + calledMultiplicand + " + " +
+            calledSummand + ";\n\n";
+            break;
+        default:
+            calledFun += "  " + calledVarName + " = " + calledArgName + " * " + calledMultiplicand + " + " +
+                calledSummand + ";\n\n";
+    }
+    if(calledReturnsArgNotVar)      /* */
+    {
+        calledFun += "  return (*" + calledArgName + ");\n}\n\n";
+    }
+    else if(calledReturnsZeroNotVar)
+    {
+        calledFun += "  return 0;\n}\n\n";
+    }
+    else
+    {
+        calledFun += "  return " + calledVarName + ";\n}\n\n";
+    }
+
+
+
+    // create main function
+    mainFun += "int main()\n{\n"
+    mainFun += "  int " + mainConstVarName + ", " + mainRetVarName + ";\n";
+    mainFun += "  " + mainConstVarName + " = " + mainConstVarVal + ";\n";
+    switch(passArgByType)
+    {
+        case 2:
+            mainFun += "  " + mainRetVarName + " = " + calledFunName + "(&" + mainConstVarName + ");\n\n";
+            break;
+        default:
+            mainFun += "  " + mainRetVarName + " = " + calledFunName + "(" + mainConstVarName + ");\n\n";
+    }
+    mainFun += "  std::cout << " + mainRetVarName + " << std::endl;\n\n";
+    mainFun += "  return 0;\n}\n\n";
 
 
 
@@ -327,6 +208,7 @@ function cppFunctionParametersB(randomStream, params)
     ];
     randomStream.shuffle(this.answerChoices);
 
+    // TODO: refactor this into its own function, I tend to do it alot
     this.correctIndex = -1;
     for(var i = 0; i < this.answerChoices.length; ++i)
     {

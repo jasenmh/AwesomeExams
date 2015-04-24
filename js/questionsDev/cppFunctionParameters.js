@@ -68,8 +68,7 @@ function cppFunctionParametersA(randomStream)
 
 }
 
-function cppFunctionParametersB(randomStream, params)
-{
+function cppFunctionParametersB(randomStream) {
     var parameterPassTypes =
         [
             ["pass by value", "", 0],
@@ -85,22 +84,21 @@ function cppFunctionParametersB(randomStream, params)
     // make some decisions about how the program will be arranged
     var correctAnswer;
     var redHerrings;
-    var uniqueNames = [ ];    // maintain a list to avoid name collisions
+    var uniqueNames = [];    // maintain a list to avoid name collisions
     var calledFunName = cppGetUniqueRandomId(randomStream, randomStream.nextIntRange(3), uniqueNames);
     var mainConstVarName = cppGetUniqueRandomId(randomStream, 3, uniqueNames);
     var mainRetVarName = cppGetUniqueRandomId(randomStream, 3, uniqueNames);
     var calledArgName = cppGetUniqueRandomId(randomStream, 3, uniqueNames);
     var calledVarName = cppGetUniqueRandomId(randomStream, 3, uniqueNames);
     var mainConstVarVal = 2 + randomStream.nextIntRange(17);    // 2-19
-    var mainRetVarVal;
+    var mainRetVarVal;  // TODO: do i need this var?
     var calledArgVal;
     var calledVarVal;
     var calledMultiplicand = 2 + randomStream.nextIntRange(7); // 2-9
     var calledSummand = 2 + randomStream.nextIntRange(17); // 2-19
     var calledReturnsArgNotVar = false;
     var calledReturnsZeroNotVar = false;
-    switch(randomStream.pick([0, 1, 2]))
-    {
+    switch (randomStream.pick([0, 1, 2])) {
         case 0:
             calledReturnsArgNotVar = true;
             break;
@@ -114,31 +112,41 @@ function cppFunctionParametersB(randomStream, params)
     //////////////////////////////////////////////////////
     calledArgVal = mainConstVarVal;
     calledVarVal = calledArgVal * calledMultiplicand + calledSummand;
-    if(calledReturnsArgNotVar)      /* */
+    if (calledReturnsArgNotVar)      /* */
     {
         correctAnswer = calledArgVal;
     }
-    else if(calledReturnsZeroNotVar)
-    {
+    else if (calledReturnsZeroNotVar) {
         correctAnswer = 0;
     }
-    else
-    {
+    else {
         correctAnswer = calledVarVal;
     }
 
-    redHerrings = [ 1, 'an error']; //, 'a memory address' ]; // standard red herrings
+    redHerrings = [1, 'an error']; //, 'a memory address' ]; // standard red herrings
     cppAddUniqueToList(mainConstVarVal, redHerrings);
     cppAddUniqueToList(calledArgVal, redHerrings);
     cppAddUniqueToList((mainConstVarVal + calledSummand) * calledMultiplicand, redHerrings);
     cppAddUniqueToList(mainConstVarVal * (calledMultiplicand + calledSummand), redHerrings);
     cppEnsureElementNotInList(correctAnswer, redHerrings);
-    while(redHerrings.length < 3)   // make sure enough were added to create a complete answer list (need 3 RHs)
+
+    if (redHerrings.length < 3)
     {
-        cppAddUniqueToList(2 + randomStream.nextIntRange(97));  // 2-99
+        while (redHerrings.length < 3)   // make sure enough were added to create a complete answer list (need 3 RHs)
+        {
+            cppAddUniqueToList(2 + randomStream.nextIntRange(97));  // 2-99
+        }
     }
 
-    randomStream.shuffle(redHerrings);
+    if(redHerrings.length > 4)    // the first answers added are more pedagogic and should remain in the list over random answers
+    {
+        randomStream.shuffle(redHerrings);
+        redHerrings.splice(4, redHerrings.length - 4);
+    }
+    else
+    {
+        randomStream.shuffle(redHerrings);
+    }
 
 
 
@@ -185,7 +193,7 @@ function cppFunctionParametersB(randomStream, params)
     // create main function
     mainFun += "int main()\n{\n"
     mainFun += "  int " + mainConstVarName + ", " + mainRetVarName + ";\n";
-    mainFun += "  " + mainConstVarName + " = " + mainConstVarVal + ";\n";
+    mainFun += "  " + mainConstVarName + " = " + mainConstVarVal + ";\n\n";
     switch(passArgByType)
     {
         case 2:

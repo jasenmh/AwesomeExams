@@ -80,7 +80,7 @@ function updateAwesomeQuestions(seed)
     $(".pa-question").each( function() {
         var pa_params = $(this).data("pa-params");
         pa_params = pa_params.replace(/'/g, '"');
-        var showPts = true; //$(this).data("pa-showPts") == "true"; TODO: don't hardcode true, figure out who comparison failing
+        var showPts = true; //$(this).data("pa-showPts") == "true"; TODO: don't hardcode true, figure out how comparison failing
         var pts = $(this).data("pa-pts");
         var ptsString = null;
 
@@ -92,7 +92,7 @@ function updateAwesomeQuestions(seed)
         var quizJson = JSON.parse(pa_params);
         var quiz = new Quiz(seed, quizJson);
 
-        $(this).html((showPts ? ptsString : "") + quiz.formatQuestionsHTML() + "<br>" + quiz.formatAnswersHTML());
+        $(this).html((showPts ? ptsString : "") + quiz.formatQuestionsHTML() + "<br>"); // + quiz.formatAnswersHTML()); // TODO: show this when answer key is visible
     });
 
 }
@@ -170,7 +170,7 @@ $(document.body).ready(function () {
 	var examCount = parseInt(url.param("count"));
 
     addOptionForEachQuestionType($("#awesomeQuestionType"));
-    //updateAwesomeQuestions(startExamNum);
+    updateAwesomeQuestions(startExamNum);
 
     $("#htmlQuestionButton").click(addHtmlQuestion);
     $("#awesomeQuestionButton").click(addAwesomeQuestion);

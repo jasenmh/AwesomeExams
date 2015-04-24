@@ -2,12 +2,21 @@
 //and the rendering of it as HTML
 var Quiz = function Quiz(seed,quizDescriptor)
 {
-    this.seed = seed;
+    // Quiz can receive an existing RandomStream to use instead of instancing a new one
+    if(typeof(seed) === "number")   // instance RandomStream using given seed
+    {
+        this.seed = seed;
+        this.randomStream = new RandomStream(seed);
+
+    }
+    else                            // given seed is really an existing RandomStream, use it
+    {
+        this.seed = seed.currentSeed;
+        this.randomStream = seed;
+    }
+
     this.jsonObject = quizDescriptor;
-
-    this.randomStream = new RandomStream(seed);
     this.questions = interpretQuizJSON(this.jsonObject, this.randomStream);
-
     this.quizname = this.jsonObject.quizTitle;
 
     //Create a string that is a list of all the questions
@@ -17,7 +26,7 @@ var Quiz = function Quiz(seed,quizDescriptor)
             // text += "<h3>Question " + (i+1) + ":</h3>" + this.questions[i].formatQuestion("HTML") + "<br>"; TODO: modified to use Awesome questions in exams
             text += this.questions[i].formatQuestion("HTML") + "<br>";
         return text;
-    }
+    };
 
     //Create a string that is a list of all the answers
     this.formatAnswersHTML = function() {
@@ -25,10 +34,10 @@ var Quiz = function Quiz(seed,quizDescriptor)
         for(var i=0; i<this.questions.length; i++)
             text += "<div class='pa-question-answer'><strong>Answer " + this.questions[i].formatAnswer("HTML") + "</strong></div>";
         return text;
-    }
+    };
 
     this.key = this.formatAnswersHTML();
-}
+};
 
 function buildQuiz() {
 

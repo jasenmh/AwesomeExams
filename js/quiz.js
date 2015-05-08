@@ -1,6 +1,6 @@
 //quiz.js -- handles the generation of the Quiz from a QuizDescriptor and a Seed,
 //and the rendering of it as HTML
-var Quiz = function Quiz(seed,quizDescriptor)
+var Quiz = function Quiz(seed,quizDescriptor) // TODO: does this need to be a named function before stored in a var?
 {
     // Quiz can receive an existing RandomStream to use instead of instancing a new one
     if(typeof(seed) === "number")   // instance RandomStream using given seed

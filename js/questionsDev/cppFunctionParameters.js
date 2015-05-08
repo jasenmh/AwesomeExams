@@ -123,7 +123,7 @@ function cppFunctionParametersB(randomStream) {
         correctAnswer = calledVarVal;
     }
 
-    redHerrings = [1, 'an error']; //, 'a memory address' ]; // standard red herrings
+    redHerrings = [ 1 ]; //, 'an error', 'a memory address' ]; // standard red herrings
     cppAddUniqueToList(mainConstVarVal, redHerrings);
     cppAddUniqueToList(calledArgVal, redHerrings);
     cppAddUniqueToList((mainConstVarVal + calledSummand) * calledMultiplicand, redHerrings);
@@ -177,7 +177,14 @@ function cppFunctionParametersB(randomStream) {
     }
     if(calledReturnsArgNotVar)      /* */
     {
-        calledFun += "  return (*" + calledArgName + ");\n}\n\n";
+        if(passArgByType === 2)
+        {
+            calledFun += "  return (*" + calledArgName + ");\n}\n\n";
+        }
+        else
+        {
+            calledFun += "  return " + calledArgName + ");\n}\n\n";
+        }
     }
     else if(calledReturnsZeroNotVar)
     {
@@ -191,7 +198,7 @@ function cppFunctionParametersB(randomStream) {
 
 
     // create main function
-    mainFun += "int main()\n{\n"
+    mainFun += "int main()\n{\n";
     mainFun += "  int " + mainConstVarName + ", " + mainRetVarName + ";\n";
     mainFun += "  " + mainConstVarName + " = " + mainConstVarVal + ";\n\n";
     switch(passArgByType)
@@ -261,10 +268,9 @@ function cppFunctionParametersB(randomStream) {
 
 function cppFunctionParametersQuestion(randomStream, params)
 {
-/*
+
     if(randomStream.nextIntRange(3) === 0)
         return new cppFunctionParametersA(randomStream, params);
     else
-*/
-        return new cppFunctionParametersB(randomStream, params);
+        return new cppFunctionParametersB(randomStream);
 }

@@ -115,7 +115,7 @@ function cppGenerateBoolAnswer(randomStream)
 
 function CppApproVar(randomStream)
 {
-    var testVarTypes = ["int", "double", "bool", "char"]; // [ "int", "double", "char", "bool" ]; "atrocious"
+    var testVarTypes = ["int", "double", "bool", "char"]; // [ "int", "double", "char", "bool" ]; atrocious
     var typeAnswer;
 
     //typeAnswer = randomStream.nextIntRange(4);
@@ -134,7 +134,7 @@ function CppApproVar(randomStream)
             case 1:
                 typeQuestion += cppGenerateDoubleAnswer(randomStream);
                 break;
-/*
+/*  atrocious
             case 2:
                 typeQuestion += cppGenerateCharAnswer(randomStream);
                 break;

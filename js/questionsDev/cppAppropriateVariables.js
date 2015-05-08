@@ -51,15 +51,6 @@ function cppGenerateDoubleAnswer(randomStream)
 
 }
 
-function cppGenerateCharAnswer(randomStream)
-{
-    if(randomStream.nextIntRange(2) === 0)
-        return "'" + String.fromCharCode(Math.floor(Math.random() * 24) + 65) + "'";
-    else
-        return "'" + String.fromCharCode(Math.floor(Math.random() * 24) + 65) + "' + '" +
-            String.fromCharCode(Math.floor(Math.random() * 24) + 65) + "'";
-}
-
 function cppGenerateBoolAnswer(randomStream)
 {
     if(randomStream.nextIntRange(2) === 0)
@@ -134,11 +125,6 @@ function CppApproVar(randomStream)
             case 1:
                 this.typeQuestion += cppGenerateDoubleAnswer(randomStream);
                 break;
-/*  atrocious
-            case 2:
-                this.typeQuestion += cppGenerateCharAnswer(randomStream);
-                break;
-*/
             default:
                 this.typeQuestion += cppGenerateBoolAnswer(randomStream);
         }
@@ -160,7 +146,6 @@ function CppApproVar(randomStream)
         this.answerChoices = [
             { value: cppGenerateIntAnswer(randomStream), flag: (typeAnswer===0) },
             { value: cppGenerateDoubleAnswer(randomStream), flag: (typeAnswer===1) },
-            //{ value: cppGenerateCharAnswer(randomStream), flag: (typeAnswer===2) },
             { value: cppGenerateBoolAnswer(randomStream), flag: (typeAnswer===2) },
             { value: "None of the above", flag: false }
         ];

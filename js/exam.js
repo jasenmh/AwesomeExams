@@ -178,7 +178,7 @@ $(document.body).ready(function () {
 
 	$(".showAnswerKey").click(function(){
 		ec.showAnswerKey();
-	    });
+	});
 	
 	
 	$(".makeCopies").click(function(){
@@ -191,7 +191,7 @@ $(document.body).ready(function () {
 			for (var i=startExamNum; i<startExamNum+examCount; i++) { 
 			    $(this).clone().removeAttr("id").addClass("containerCopy").data("sequence",i).appendTo("#containerCopies");
 			}
-		    });
+		});
 		$(".containerCopy").each( function(k) {
 		     var sequence = $(this).data("sequence");
 		     console.log(".containerCopy k=" + k + " sequence=" + sequence);
@@ -214,11 +214,11 @@ $(document.body).ready(function () {
 					    "</div>");
 			 });
 
-		 $(this).find(".pageBreakBefore").each( function(n) {
-		     var theHTML = generatePageHeader(sequence, n+1);
-		     console.log("pageBreakBefore n= " + n + " sequence=" + sequence);
-		     console.log("pageBreakBefore, theHTML=" + theHTML);
-		     $(this).before(theHTML);
+			 $(this).find(".pageBreakBefore").each( function(n) {
+				 var theHTML = generatePageHeader(sequence, n+1);
+				 console.log("pageBreakBefore n= " + n + " sequence=" + sequence);
+				 console.log("pageBreakBefore, theHTML=" + theHTML);
+				 $(this).before(theHTML);
                              $(this).before($('<hr/>', {class: 'pageHeader'}));
 
 		      }); 
@@ -229,9 +229,7 @@ $(document.body).ready(function () {
 			     $(this).before($('<p/>', {class: 'continuedLabel',
 					     text: "Extra space for answer to question " + qNum
 					     }));
-
-
-		      }); 
+			 });
 
 		     var text= $(this).contents().text();
 		     var totalPoints = pointCountText(text);
@@ -239,15 +237,13 @@ $(document.body).ready(function () {
 
 		     $(this).find(".pointCount").text("total points=" + totalPoints);
 
-		 });
+		});
 
 	     
-	 });
+	});
 
         $(this).html((showPts ? ptsString : "") + quiz.formatQuestionsHTML() + "<br>" + quiz.formatAnswersHTML());
-    });
-
-} */
+});
 
 function showHideAnswers()
 {

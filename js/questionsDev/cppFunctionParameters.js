@@ -266,11 +266,11 @@ function cppFunctionParametersB(randomStream) {
     };
 }
 
-function cppFunctionParametersQuestion(randomStream, params)
+function cppFunctionParametersQuestion(randomStream)
 {
 
     if(randomStream.nextIntRange(3) === 0)
-        return new cppFunctionParametersA(randomStream, params);
+        return new cppFunctionParametersA(randomStream);
     else
         return new cppFunctionParametersB(randomStream);
 }

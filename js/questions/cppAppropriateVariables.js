@@ -115,7 +115,7 @@ function cppGenerateBoolAnswer(randomStream)
 
 function CppApproVar(randomStream)
 {
-    var testVarTypes = ["int", "double", "bool", "char"]; // [ "int", "double", "char", "bool" ]; atrocious
+    var testVarTypes = ["int", "double", "bool", "char"];
     var typeAnswer;
 
     //typeAnswer = randomStream.nextIntRange(4);
@@ -123,7 +123,7 @@ function CppApproVar(randomStream)
 
     var typeQuestion;
     // 2 types of question
-    if(randomStream.nextIntRange(2) === 0) // given statement, choose type
+    if(randomStream.nextIntRange(5) >= 1) // given statement, choose type (picked 2 out of 5 times)
     {
         typeQuestion = "<p>Which type will store the following expression or literal?</p><pre>";
         switch(typeAnswer)
@@ -152,7 +152,7 @@ function CppApproVar(randomStream)
         ];
         this.answerChoices[typeAnswer].flag = true;
     }
-    else // given type, choose statement
+    else // given type, choose statement (picked 3 out of 5 times)
     {
         typeQuestion = "<p>Which statement or literal is of the following type?</p><pre>" +
             testVarTypes[typeAnswer] + "</pre>";
@@ -160,8 +160,9 @@ function CppApproVar(randomStream)
         this.answerChoices = [
             { value: cppGenerateIntAnswer(randomStream), flag: (typeAnswer===0) },
             { value: cppGenerateDoubleAnswer(randomStream), flag: (typeAnswer===1) },
-            { value: cppGenerateCharAnswer(randomStream), flag: (typeAnswer===2) },
-            { value: cppGenerateBoolAnswer(randomStream), flag: (typeAnswer===3) }
+            //{ value: cppGenerateCharAnswer(randomStream), flag: (typeAnswer===2) },
+            { value: cppGenerateBoolAnswer(randomStream), flag: (typeAnswer===2) },
+            { value: "None of the above", flag: false }
         ];
     }
 

@@ -27,3 +27,22 @@ QUnit.test("cppUtilities", function(assert) {
     c = cppGenerateRandomValue(this.rs, 2);
     assert.ok(["true", "false"].indexOf(c) != -1, "cppGenerateRandomValue() Boolean returns expected value");
 });
+
+QUnit.test("cppAppropriateVariables", function(assert) {
+    var  intAnswerRegex = /(^\d+$|^\d+\s{1}[\+\-\*\/]\s{1}\d+$)/;
+    var  dblAnswerRegex = /(^\d+\.\d+$|^\d+\.\d+\s{1}[\+\-\*\/]\s{1}\d+\.\d+$)/;
+    var boolAnswerRegex = /(^(true|false)$|^(\d+|\d+\.\d+)\s(==|!=|>=|<=|>|<)\s(\d+|\d+\.\d+)$)/;
+
+    var intAns = cppGenerateIntAnswer(this.rs);
+    assert.ok(intAnswerRegex.test(intAns), "cppGenerateIntAnswer() returns expected value");
+    var dblAns = cppGenerateDoubleAnswer(this.rs);
+    assert.ok(dblAnswerRegex.test(dblAns), "cppGenerateDoubleAnswer() returns expected value");
+    var boolAns = cppGenerateBoolAnswer(this.rs);
+    assert.ok(boolAnswerRegex.test(boolAns), "cppGenerateBoolAnswer() returns expected value");
+});
+
+// cppArgcArgv has no methods eligible for unit test
+// cppBooleanEval has no methods eligible for unit testing
+// cppFunctionOverloading has no methods eligible for unit testing
+// cppFunctionParameters has no methods eligible for unit testing
+// cppPointerAssignment has no methods eligible for unit testing

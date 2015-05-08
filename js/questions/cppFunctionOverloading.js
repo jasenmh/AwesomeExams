@@ -1,4 +1,4 @@
-function cppFunctionOverloadingQuestion(randomStream)
+function CppFunctionOverloadingQuestion(randomStream)
 {
     var funcOverName = cppGetRandomId(randomStream, 0);
     var funcOverArgs = [];

@@ -1,0 +1,7 @@
+This question type asks the reader to consider a code fragment that uses 
+comparison operators to assign the value of a variable. The student must
+be able to determine how the comparison resolves and based on that, what
+the final value of the variable in question will be.
+
+Jasen Hall
+8 May 2015

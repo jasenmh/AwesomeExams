@@ -1,0 +1,6 @@
+This question type asks 2 types of questions:
+1) Given a command line, what is argc?
+2) Given a command line, what is argv[x][y]?
+
+Jasen Hall
+8 May 2015

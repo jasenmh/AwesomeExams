@@ -1,0 +1,8 @@
+This question type asks 2 types of questions:
+1) Given a function prototype, identify the manner in which parameters are 
+   being passed.
+2) Given a C++ program, identify what the output will be based on the how the 
+   parameters are passed.
+
+Jasen Hall
+8 May 2015

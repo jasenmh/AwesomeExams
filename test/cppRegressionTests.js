@@ -13,26 +13,25 @@ QUnit.test("cppAppropriateVariablesQuestion", function(assert) {
   var q = new CppApproVar(this.rs);
 
   assert.ok(q != undefined, "instance a question");
-  assert.equal(q.formatQuestionHTML(), "<p>Which type will store the following statement or literal?</p><pre>24 < 35.39</pre><p><strong>a) </strong>int<br><strong>b) </strong>double<br><strong>c) </strong>char<br><strong>d) </strong>bool</p>", "quiz is correct");
+  assert.equal(q.formatQuestionHTML(), "<p>Which type will store the following expression or literal?</p><code>2.35 / 39.24</code></p><p><strong>a) </strong>int<br><strong>b) </strong>double<br><strong>c) </strong>bool<br><strong>d) </strong>char</p>", "quiz is correct");
 });
 
 QUnit.test("cppArgcArgv", function(assert) {
-  var q = new cppArgcArgvQuestion(this.rs);
+  var q = new CppArgcArgvQuestion(this.rs, {});
 
   assert.ok(q != undefined, "instance a question");
   assert.equal(q.formatQuestionHTML(), "<p>What is the value of argv[2][7] after the following command is typed?</p><pre>./mole blarp squeeble blurgle smop</pre><p><strong>a) </strong>undefined<br><strong>b) </strong>l<br><strong>c) </strong>p<br><strong>d) </strong>e</p>", "quiz is correct");
 });
 
-
 QUnit.test("cppBooleanEval", function(assert) {
-  var q = new cppBooleanEvalQuestion(this.rs);
+  var q = new CppBooleanEvalQuestion(this.rs, {});
 
   assert.ok(q != undefined, "instance a question");
   assert.equal(q.formatQuestionHTML(), "<p>What is the final value of 'answer'?</p><pre>bool mole = true;\nbool moop = false;\nint answer;\nif(mole != moop)\n  answer = 91;\nelse\n  answer = 61;\n</pre><p><strong>a) </strong>false<br><strong>b) </strong>91<br><strong>c) </strong>true<br><strong>d) </strong>61</p>", "quiz is correct");
 });
 
 QUnit.test("cppFunctionOverloading", function(assert) {
-  var q = new cppFunctionOverloadingQuestion(this.rs);
+  var q = new CppFunctionOverloadingQuestion(this.rs);
 
   assert.ok(q != undefined, "instance a question");
   assert.equal(q.formatQuestionHTML(), "<p>Which function signature belongs to the function that is called?</p><pre>int squeeble = 77;\nbool bim = false;\ndouble squish = 76.18;\nbool blurgle = false;\nbool squash = true;\n\nsnork(squash, squeeble, bim, squish, blurgle);</pre><p><strong>a) </strong>void snork(bool spiffle, int blurgle, int baz, double squal, bool tulopulop);<br><strong>b) </strong>bool snork(bool spiffle, bool blurgle, bool baz, double squal, bool tulopulop);<br><strong>c) </strong>int snork(double spiffle, int blurgle, bool baz, double squal, bool tulopulop);<br><strong>d) </strong>int snork(bool spiffle, int blurgle, bool baz, double squal, bool tulopulop);</p>", "quiz is correct");
@@ -42,7 +41,7 @@ QUnit.test("cppFunctionParameters", function(assert) {
   var q = new cppFunctionParametersQuestion(this.rs);
 
   assert.ok(q != undefined, "instance a question");
-  assert.equal(q.formatQuestionHTML(), "", "quiz is correct");
+  assert.equal(q.formatQuestionHTML(), "<p>What is the output of this program?</p><pre>#include &lt;iostream>\n\nint smop(int *MOOP)\n{\n  int moop;\n\n  moop = (*MOOP) * 2 + 5;\n\n  return (*MOOP);\n}\n\nint main()\n{\n  int minx, mOOp;\n  minx = 10;\n\n  mOOp = smop(&minx);\n\n  std::cout << mOOp << std::endl;\n\n  return 0;\n}\n\n</pre><p><strong>a) </strong>70<br><strong>b) </strong>10<br><strong>c) </strong>1<br><strong>d) </strong>30</p>", "quiz is correct");
 });
 
 QUnit.test("cppPointerAssignment", function(assert) {

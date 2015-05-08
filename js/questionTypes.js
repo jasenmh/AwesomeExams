@@ -1,10 +1,15 @@
 // NEW-QUESTION-TYPE: add to questionFunctions dictionary below
 
 var questionTypes = {
-    "binHexOctDec":          {"f": binHexOctDecQuestion,        title: "Bin Hex Oct Dec"}
+    "cppAppropriateVariables":  {"f": cppAppropriateVariablesQuestion, title: "C++ Variable Types"},
+    "cppArgcArgv":              {"f": CppArgcArgvQuestion,         title: "C++ Command Line Arguments"},
+    "cppBooleanEval":           {"f": CppBooleanEvalQuestion,      title: "C++ Boolean Evaluation"},
+    "cppFunctionOverloading":   {"f": CppFunctionOverloadingQuestion, title: "C++ Function Overloading"},
+    "cppFunctionParameters":    {"f": cppFunctionParametersQuestion, title: "C++ Function Parameters"},
+    "cppPointerAssignment":     {"f": cppPointerAssignmentQuestion, title: "C++ Pointer Assignment"}
 };
 
-// To QA a new quesiton type:
+// To QA a new question type:
 //   * Write instructor documentation for question type
 //   * Move the js file from questionsDev to questions
 //   * Add unit tests for all the code in file
@@ -13,13 +18,8 @@ var questionTypes = {
 //   * Get code review of question type
 //   * Do pull request for question type
 
+// "binHexOctDec":          {"f": binHexOctDecQuestion,        title: "Bin Hex Oct Dec"},
 // "changeOfBase":          {"f": changeOfBaseQuestion,       title: "Change of Base"},
-// "cppFunctionParameters": {"f": cppFunctionParametersQuestion, title: "C++ Function Parameters"},
-// "cppAppropriateVariables": {"f": cppAppropriateVariablesQuestion, title: "C++ Variable Types"},
-// "cppBooleanEval":        {"f": cppBooleanEvalQuestion,      title: "C++ Boolean Evaluation"},
-// "cppArgcArgv":           {"f": cppArgcArgvQuestion,         title: "C++ Command Line Arguments"},
-// "cppFunctionOverloading": {"f": cppFunctionOverloadingQuestion, title: "C++ Function Overloading"},
-// "cppPointerAssignment":  {"f": cppPointerAssignmentQuestion, title: "C++ Pointer Assignment"},
 // "orderOfOperations":     {"f": orderOfOperationsQuestion,   title: "Order of Operations"},
 // "operandsAndOperators":  {"f": operandsAndOperatorsQuestion,title: "Operands and Operators"},
 // "pythonProgramOutput":   {"f": pythonProgramOutputQuestion, title: "Python Program Output"},

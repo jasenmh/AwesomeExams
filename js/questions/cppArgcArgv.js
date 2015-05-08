@@ -1,8 +1,8 @@
-function cppArgcArgvQuestion(randomStream, params)
+function CppArgcArgvQuestion(randomStream, params)
 {
     this.pts = 0;
-    if (params.hasOwnProperty('pts')) {
-	this.pts = params.pts;
+    if ('pts' in params) {
+    this.pts = params.pts;
     }
 
     var argcQuestion;

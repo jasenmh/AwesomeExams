@@ -1,4 +1,4 @@
-function cppBooleanEvalQuestion(randomStream, params)
+function CppBooleanEvalQuestion(randomStream, params)
 {
     this.pts=0;
     if ('pts' in params) {

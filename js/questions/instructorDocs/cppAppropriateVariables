@@ -1,0 +1,8 @@
+This question type asks 2 types of questions:
+1) Given an expression (like, 5 < 3 or 19 / 2), the student must identify the
+   type of variable that will contain the result of the expression.
+2) Given a variable type, choose the exression that will generate a result of
+   that type.
+
+Jasen Hall
+8 May 2015

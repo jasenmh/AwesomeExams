@@ -116,7 +116,7 @@ function CppApproVar(randomStream)
     // 2 types of question
     if(randomStream.nextIntRange(5) >= 1) // given statement, choose type (picked 2 out of 5 times)
     {
-        typeQuestion = "<p>Which type will store the following expression or literal?</p><pre>";
+        this.typeQuestion = "<p>Which type will store the following expression or literal?</p><code>";
         switch(typeAnswer)
         {
             case 0:

@@ -61,7 +61,6 @@ var Quiz = function Quiz(seed,quizDescriptor) // TODO: does this need to be a na
         return text;
     };
 
-
     this.key = this.formatAnswersHTML();
 };
 
